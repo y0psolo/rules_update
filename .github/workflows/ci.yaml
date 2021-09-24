@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.1
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Make all artefacts
+        run: make version=${{ steps.get_version.outputs.VERSION }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: "dist/*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

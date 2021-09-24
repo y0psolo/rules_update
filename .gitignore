@@ -1,0 +1,3 @@
+bazel-*
+dist
+rules/repositories.bzl
