@@ -21,7 +21,7 @@ update_version:
 	GOOS=windows GOARCH=amd64 go build -o "./dist/update_version_windows_amd64.exe" -ldflags=${LD_FLAGS} ./update_version/update_version.go
 
 rule:
-	./scripts/generate_repositories.sh ${version}
+	./release.sh ${version}
 	tar --sort=name --numeric-owner --owner=0 --group=0  --mtime="$(git show --no-patch --no-notes --pretty='%cI' HEAD)" --create --gzip --directory=rules --file=dist/rules_update.tar.gz .
 
 all: update_http update_version rule
