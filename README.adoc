@@ -44,7 +44,7 @@ Next in your BUILD files call the rule for updating the corresponding bazel file
 
 [source, python]
 ----
-load("@rules-update//:update.bzl", "update_http", "update_version)
+load("@rules-update//:update.bzl", "update_http", "update_version")
 
 update_http(
     name = "update_workspace",

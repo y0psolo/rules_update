@@ -31,12 +31,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit files
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add docs/workspace.adoc
           git commit -m "Documentation update"
       - name: Push changes
+        if: startsWith(github.ref, 'refs/tags/')
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
