@@ -1,0 +1,3 @@
+DENO_VERSION = "1.14.0"
+
+AZUL_VERSIONS_MAPPING = { "11": "11.0.9", "8": "8.0.302", }

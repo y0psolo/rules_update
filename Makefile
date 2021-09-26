@@ -5,6 +5,8 @@ default: clean all
 
 clean:
 	rm -rf dist
+	rm -f rules/repositories.bzl
+	rm -f docs/workspace.adoc
 
 http:
 	GOOS=linux GOARCH=amd64 go build -o "./dist/update_http_linux_amd64" -ldflags=${LD_FLAGS} ./update_http/update_http.go
@@ -24,4 +26,7 @@ rule:
 	./release.sh ${version}
 	tar --sort=name --numeric-owner --owner=0 --group=0  --mtime="$(git show --no-patch --no-notes --pretty='%cI' HEAD)" --create --gzip --directory=rules --file=dist/rules_update.tar.gz .
 
-all: http version rule
+doc:
+	./post_release.sh ${version}
+
+all: http version rule doc

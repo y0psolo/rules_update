@@ -1,0 +1,27 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+
+http_file(
+    name = "tini-amd64",
+    downloaded_file_path = "tini",
+    executable = True,
+    sha256 = "0000000000000000000000000000000000000000000000000000000000000000",
+    urls = ["https://github.com/krallin/tini/releases/download/v0.18.0/tini-amd64"],
+)
+
+http_archive(
+    name = "nodejs-16-amd64",
+    build_file = "BUILD.nodejs",
+    sha256 = "0000000000000000000000000000000000000000000000000000000000000000",
+    strip_prefix = "node-v16.9.0-linux-x64/",
+    urls = ["https://nodejs.org/dist/v16.9.1/node-v16.9.0-linux-x64.tar.gz"],
+)
+
+http_archive(
+    name = "rules-update",
+    sha256 = "3d277a1fcd74de447c423d5541aa1005c7012bb73b93b07144cb5d619ba3f08e",
+    urls = ["https://github.com/y0psolo/rules_update/releases/download/v0.1.0/rules_update.tar.gz"],
+)
+
+# Load update tools
+load("@rules-update//:repositories.bzl", "update_dependencies")
+update_dependencies()

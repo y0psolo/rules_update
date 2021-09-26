@@ -1,0 +1,3 @@
+deno:
+  name: DENO_VERSION
+  value: 1.14.1

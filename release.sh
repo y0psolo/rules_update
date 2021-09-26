@@ -9,7 +9,7 @@ readonly ARTIFACTS_DIR="${ROOT_DIR}/dist"
 readonly version=${1}
 
 function main() {
-  cat << EOF >> "${ROOT_DIR}/rules/repositories.bzl"
+  cat << EOF > "${ROOT_DIR}/rules/repositories.bzl"
 # WARNING!!!
 # DO NOT MODIFY THIS FILE DIRECTLY.
 # TO GENERATE THIS RUN: ./release.sh

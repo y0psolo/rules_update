@@ -1,0 +1,67 @@
+= rules-update
+:icons: font
+
+== Getting started
+
+rules_update is a repository rules , and therefore made to be used in the WORKSPACE.
+
+First, tell bazel to load the rule and its dependencies with a load() statement.
+
+include::docs/workspace.adoc[]
+
+Next create the yaml rules defining the chnage you want to apply.
+
+For updating `http_file` or `http_archive` rules inside the `WORKSPACE` file :
+
+[source, yaml]
+----
+change_name:
+  name: name_of_the_rule                                                    #required
+  sha256: ef7ef66e05ec827c058df76eeb407bda148cf358809611417e537a1cf1bffcdb  #optional
+  prefix: my_prefix                                                         #optional
+  url: my_download_url                                                      #required
+
+----
+
+if you do not set the sha256, it will be filled in automatically based on the download URL.
+
+WARNING: Do not forget to add an empty line at the end of the yaml file
+
+For updating `constants` or `dictionary` assignments inside the nay bazel file :
+
+[source, yaml]
+----
+change_name:
+  name: name_of_the_assignments     #required
+  key: xxx                          #required only if assignment is a dictionary
+  value: my_value                   #required
+
+----
+
+WARNING: Do not forget to add an empty line at the end of the yaml file
+
+Next in your BUILD files call the rule for updating the corresponding bazel files:
+
+[source, python]
+----
+load("@rules-update//:update.bzl", "update_http", "update_version)
+
+update_http(
+    name = "update_workspace",
+    yaml_files = ["my_yaml_file", "my_other_yaml_file"],
+    bazel_file = "//:WORKSPACE",
+)
+
+update_version(
+    name = "update_versions",
+    yaml_files = ["my_version_yaml_file", "my_other_version_yaml_file"],
+    bazel_file = "//:my_bazel_file.bzl",
+)
+----
+
+Now just run
+[source, shell]
+----
+bazel run //:update_workspace
+bazel run //:update_versions
+----
