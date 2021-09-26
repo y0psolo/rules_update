@@ -4,8 +4,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "rules-update",
-    sha256 = "ef7ef66e05ec827c058df76eeb407bda148cf358809611417e537a1cf1bffcdb",
-    urls = ["https://github.com/y0psolo/rules_update/releases/download/v0.1.0/rules_update.tar.gz"],
+    sha256 = "aa873b783c24363aab33b37311be9a1f67c9ac232d12a42d0cce5ded80e7344d",
+    urls = ["https://github.com/y0psolo/rules_update/releases/download/refs/heads/main/rules_update.tar.gz"],
 )
 
 # Load update tools
