@@ -8,6 +8,6 @@ update_http(
 
 update_version(
     name = "update_versions",
-    yaml_files = ["version/deno.yaml", "version/azul.yaml"],
+    yaml_files = ["version/deno.yaml", "version/azul.yaml", "version/adoptium.yaml"],
     bazel_file = "//:versions.bzl",
 )

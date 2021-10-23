@@ -10,26 +10,41 @@ import (
 	"github.com/goccy/go-yaml"
 )
 
-func updateVersion(key string, value string, dict *build.DictExpr) {
-	for _, kv := range dict.List {
-		k, ok := kv.Key.(*build.StringExpr)
-		if !ok {
-			return
-		}
-		_, ok = kv.Value.(*build.StringExpr)
-		if !ok {
-			return
-		}
-		if key == k.Value {
-			kv.Value = &build.StringExpr{Value: value}
-			return
+func updateVersion(key []string, value string, dict *build.DictExpr) {
+	size := len(key) - 1
+	item := dict
+	for i, s := range key {
+		for _, kv := range item.List {
+			k, ok := kv.Key.(*build.StringExpr)
+			if !ok {
+				return
+			}
+			if size == i {
+				_, ok = kv.Value.(*build.StringExpr)
+				if !ok {
+					return
+				}
+				if s == k.Value {
+					kv.Value = &build.StringExpr{Value: value}
+					return
+				}
+			} else {
+				d, ok := kv.Value.(*build.DictExpr)
+				if !ok {
+					return
+				}
+				if s == k.Value {
+					item = d
+					break
+				}
+			}
 		}
 	}
 }
 
 type Version struct {
 	Name  string
-	Key   string
+	Key   []string
 	Value string
 }
 
@@ -93,7 +108,7 @@ func main() {
 		for _, y := range yamlRule {
 			if key.Name == y.Name {
 
-				if y.Key == "" {
+				if len(y.Key) == 0 {
 					_, ok := kv.RHS.(*build.StringExpr)
 					if !ok {
 						continue

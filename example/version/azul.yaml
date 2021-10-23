@@ -1,4 +1,4 @@
 azul 11:
   name: AZUL_VERSIONS_MAPPING
-  key: 11
+  key: [11]
   value: 11.0.12

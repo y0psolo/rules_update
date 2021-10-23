@@ -1,0 +1,4 @@
+adoptium 11:
+  name: ADOPTIUM_VERSIONS_MAPPING
+  key: ["amd64", "11"]
+  value: 11.0.12
